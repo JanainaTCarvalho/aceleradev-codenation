@@ -42,7 +42,7 @@ sns.set()'''
 
 # ### _Setup_ da parte 1
 
-# In[4]:
+# In[3]:
 
 
 np.random.seed(42)
@@ -152,7 +152,7 @@ def q3():
 
 # ### _Setup_ da parte 2
 
-# In[3]:
+# In[5]:
 
 
 stars = pd.read_csv("pulsar_stars.csv")
@@ -169,7 +169,7 @@ stars.loc[:, "target"] = stars.target.astype(bool)
 
 # ## Inicie sua análise da parte 2 a partir daqui
 
-# In[4]:
+# In[6]:
 
 
 false_pulsar = stars[stars.target == False] ['mean_profile']
@@ -208,10 +208,10 @@ def q4():
 # 
 #     Isso é um sinal que a distribuição dessa variável é uma distruibição normal, fato que podemos comprovar, inclusive, pelo gráfico abaixo.
 
-# In[5]:
+# In[7]:
 
 
-sns.distplot(false_pulsar_mean_profile_standardized)
+sns.distplot(false_pulsar_mean_profile_standardized);
 
 
 # ## Questão 5
@@ -237,10 +237,10 @@ def q5():
 #     
 # * Curiosidade: alguns testes de hipóteses sobre normalidade dos dados utilizam essa mesma abordagem.
 
-# In[6]:
+# In[8]:
 
 
-sns.distplot(false_pulsar_mean_profile_standardized)
+sns.distplot(false_pulsar_mean_profile_standardized);
 
 
 # In[ ]:
