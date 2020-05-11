@@ -11,7 +11,7 @@
 
 # ## _Setup_ geral
 
-# In[2]:
+# In[1]:
 
 
 import pandas as pd
@@ -35,13 +35,13 @@ figsize(12, 8)
 sns.set()'''
 
 
-# In[4]:
+# In[2]:
 
 
 athletes = pd.read_csv("athletes.csv")
 
 
-# In[5]:
+# In[3]:
 
 
 def get_sample(df, col_name, n=100, seed=42):
@@ -77,7 +77,7 @@ def get_sample(df, col_name, n=100, seed=42):
 
 # ## Inicia sua análise a partir daqui
 
-# In[6]:
+# In[7]:
 
 
 amostra = get_sample(athletes, 'height', n=3000)
@@ -111,14 +111,14 @@ def q1():
 # 
 #     Não, pois o valor de $p$ encontrado é muito baixo nessa amostra. Entretanto, se pegássemos uma amostra com tamanho bem menor (abaixo de 350) começamos a encontrar valores diferentes para o mesmo teste, com o mesmo nível de significância.
 
-# In[22]:
+# In[5]:
 
 
 #Histograma da variável
-sns.distplot(amostra, bins=25)
+sns.distplot(amostra, bins=25);
 
 
-# In[32]:
+# In[6]:
 
 
 #QQ-plot da variável
@@ -158,7 +158,7 @@ amostra2 = get_sample(athletes, 'weight', n=3000)
 
 def q3():    
     result_q3 = sct.normaltest(amostra2)
-    return bool(result_q3[1] > 0.05)
+    return bool(result_q3.pvalue > 0.05)
 
 
 # __Para refletir__:
@@ -170,24 +170,24 @@ def q3():
 #     
 # * Um _box plot_ também poderia ajudar a entender a resposta.
 
-# In[70]:
+# In[18]:
 
 
-sns.distplot(amostra2, bins=25)
+sns.distplot(amostra2, bins=25);
 
 
-# In[71]:
+# In[19]:
 
 
 #Boxplot da amostra, mostrando haver vários outliers e um posicionamento da mediana mais próximo do valor mínimo da amostra.
-sns.boxplot(amostra2)
+sns.boxplot(amostra2);
 
 
 # ## Questão 4
 # 
 # Realize uma transformação logarítmica em na amostra de `weight` da questão 3 e repita o mesmo procedimento. Podemos afirmar a normalidade da variável transformada ao nível de significância de 5%? Responda com um boolean (`True` ou `False`).
 
-# In[67]:
+# In[21]:
 
 
 amostra2_log = np.log(amostra2)
@@ -212,10 +212,10 @@ def q4():
 # 
 #     Talvez. A tranformação logarítimica pode diminuir o viés de uma distribuição que possui um dos lado elevados ou uma cauda alongada, mas não é certo.
 
-# In[68]:
+# In[22]:
 
 
-sns.distplot(amostra2_log)
+sns.distplot(amostra2_log);
 
 
 # > __Para as questão 5 6 e 7 a seguir considere todos testes efetuados ao nível de significância de 5%__.
@@ -224,7 +224,7 @@ sns.distplot(amostra2_log)
 # 
 # Obtenha todos atletas brasileiros, norte-americanos e canadenses em `DataFrame`s chamados `bra`, `usa` e `can`,respectivamente. Realize um teste de hipóteses para comparação das médias das alturas (`height`) para amostras independentes e variâncias diferentes com a função `scipy.stats.ttest_ind()` entre `bra` e `usa`. Podemos afirmar que as médias são estatisticamente iguais? Responda com um boolean (`True` ou `False`).
 
-# In[19]:
+# In[23]:
 
 
 bra = athletes.loc[athletes.nationality == 'BRA', ['height']]
@@ -237,6 +237,7 @@ can = athletes.loc[athletes.nationality == 'CAN', ['height']]
 
 def q5():
     stats, p = sct.ttest_ind(bra, usa, equal_var = False, nan_policy = 'omit')
+    #(stats == -3.2232436467501855, p == 0.0013080041830140115)
     return float(p) > 0.05
 
 
@@ -249,6 +250,7 @@ def q5():
 
 def q6():
     stats, p = sct.ttest_ind(bra, can, equal_var = False, nan_policy = 'omit')
+    #(stats == 0.6389304914365109, p == 0.5230827295440921)
     return float(p) > 0.05
 
 
@@ -261,6 +263,7 @@ def q6():
 
 def q7():
     stats, p = sct.ttest_ind(usa, can, equal_var = False, nan_policy = 'omit')
+    #(stats == 3.516987632488539, p == 0.0004660129347389851)
     return float(np.round(float(p), 8))
 
 
@@ -298,27 +301,6 @@ bra.mean() - can.mean()
 
 
 usa.mean() - can.mean()
-
-
-# In[25]:
-
-
-stats1, p1 = sct.ttest_ind(bra, usa, equal_var = False, nan_policy = 'omit')
-float(stats1), float(p1)
-
-
-# In[26]:
-
-
-stats2, p2 = sct.ttest_ind(bra, can, equal_var = False, nan_policy = 'omit')
-float(stats2), float(p2)
-
-
-# In[27]:
-
-
-stats3, p3 = sct.ttest_ind(usa, can, equal_var = False, nan_policy = 'omit')
-float(stats3), float(p3)
 
 
 # In[ ]:
